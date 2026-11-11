@@ -1,0 +1,13 @@
+item_id,model_id,text_id,popularity_tier,finish_reason,similarity,rougeL,critical_accuracy,refusal,nonexistent,empty,rule_grade,spec_rule_grade,judge_grade,grade
+kjv-John-3-16,claude-haiku-4-5,kjv,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+kjv-John-3-16,claude-sonnet-5-5,kjv,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+sonnets-018,claude-haiku-4-5,sonnets,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+sonnets-018,claude-sonnet-5-5,sonnets,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+kjv-John-3-16,claude-opus-5-5,kjv,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+tractatus-2.2,claude-sonnet-5-5,tractatus,shallow,end_turn,0.3171,0.2308,,False,False,False,,,0,0
+tractatus-2.2,claude-opus-5-5,tractatus,shallow,end_turn,1.0,1.0,,False,False,False,3,3,,3
+sonnets-018,claude-opus-5-5,sonnets,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+usconst-1-1,claude-sonnet-5-5,us_constitution,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+tractatus-2.2,claude-haiku-4-5,tractatus,shallow,end_turn,0.2683,0.1429,,True,False,False,,0,0,0
+usconst-1-1,claude-opus-5-5,us_constitution,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
+usconst-1-1,claude-haiku-4-5,us_constitution,famous,end_turn,1.0,1.0,1.0,False,False,False,3,3,,3
