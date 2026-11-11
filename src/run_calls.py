@@ -64,6 +64,17 @@ def est_tokens(s):
 def estimate(cfg, jobs, items, pricing, out_tokens_c2=None):
     by_item = {it["item_id"]: it for it in items}
     rows = {}
+    if cfg.get("backend") == "claude_cli":
+        # per-call list-price cost measured in test calls (CLI overhead ~1.5k input tokens dominates)
+        per = {m["id"]: m["est_usd_per_call"] for m in cfg["models"] + [cfg["judge"]]}
+        for j in jobs:
+            r = rows.setdefault((j["model_id"], j["condition"]), [0, 0.0, 0.0, 0.0])
+            r[0] += 1
+            r[3] += per[j["model_id"]] * (1.15 if j["condition"] == "C2" else 1.0)
+        n_c2 = sum(1 for j in jobs if j["condition"] == "C2")
+        n_j = int(0.75 * n_c2)  # outputs not rule-graded as verbatim
+        rows[(cfg["judge"]["id"], "JUDGE")] = [n_j, 0, 0, n_j * per[cfg["judge"]["id"]]]
+        return rows
     for j in jobs:
         p = pricing[j["model_id"]]["pricing"]
         tin = est_tokens(j["system"]) + est_tokens(j["user"]) + 8
@@ -99,7 +110,49 @@ def print_estimate(rows):
     return tot
 
 
+def call_cli(cfg, model_id, system, user, retries=4):
+    """One isolated Claude Code CLI call: replaced system prompt, no tools, no MCP, no settings, no session.
+    MAX_THINKING_TOKENS is removed from the environment because it forces thinking on; models that still
+    think are recorded via thinking_tokens. No temperature or max_tokens control is available."""
+    import subprocess
+    import tempfile
+    spec = {m["id"]: m for m in cfg["models"] + [cfg["judge"]]}.get(model_id, {})
+    cmd = ["claude", "-p", "--model", model_id, "--system-prompt", system, "--tools", "", "--strict-mcp-config",
+           "--setting-sources", "", "--settings", json.dumps({"alwaysThinkingEnabled": False}),
+           "--exclude-dynamic-system-prompt-sections", "--no-session-persistence", "--output-format", "json"]
+    if spec.get("effort"):
+        cmd += ["--effort", spec["effort"]]
+    env = {k: v for k, v in os.environ.items() if k != "MAX_THINKING_TOKENS"}
+    body = {"model": model_id, "max_tokens": None, "effort": spec.get("effort")}
+    err = None
+    for attempt in range(retries):
+        t0 = time.time()
+        with tempfile.TemporaryDirectory() as cwd:  # empty cwd: no CLAUDE.md or project settings
+            try:
+                p = subprocess.run(cmd + [user], cwd=cwd, env=env, capture_output=True, text=True, timeout=300)
+                d = json.loads(p.stdout)
+            except Exception as e:
+                err = f"{e!r} {getattr(p, 'stderr', '')[:300] if 'p' in dir() else ''}"
+                time.sleep(2 ** (attempt + 1))
+                continue
+        if d.get("is_error") or d.get("subtype") != "success":
+            err = d.get("result") or d.get("api_error_status") or d.get("subtype")
+            time.sleep(2 ** (attempt + 1))
+            continue
+        u = d.get("usage", {})
+        out = {"choices": [{"message": {"content": d.get("result")}, "finish_reason": d.get("stop_reason")}],
+               "model": ",".join(d.get("modelUsage", {}).keys()), "provider": "claude-cli",
+               "usage": {"input_tokens": u.get("input_tokens"), "cache_creation_input_tokens": u.get("cache_creation_input_tokens"),
+                         "cache_read_input_tokens": u.get("cache_read_input_tokens"), "output_tokens": u.get("output_tokens"),
+                         "thinking_tokens": (u.get("output_tokens_details") or {}).get("thinking_tokens"),
+                         "cost": d.get("total_cost_usd")}}
+        return out, time.time() - t0, body
+    return {"error": str(err)}, 0.0, body
+
+
 def call_api(cfg, pricing, model_id, system, user, max_tokens, extra=None, retries=6):
+    if cfg.get("backend") == "claude_cli":
+        return call_cli(cfg, model_id, system, user)
     import requests
     key = os.environ.get("OPENROUTER_API_KEY", "proxy-injected")
     sp = set(pricing.get(model_id, {}).get("supported_parameters", []))
@@ -140,6 +193,7 @@ def run_job(cfg, pricing, j, out_path):
     d, latency, body = call_api(cfg, pricing, j["model_id"], j["system"], j["user"], cfg["max_tokens"][j["condition"]], extra)
     row = {k: j[k] for k in ("item_id", "model_id", "target_id", "condition", "prompt_variant")}
     row.update(temperature=body.get("temperature"), seed=body.get("seed"), thinking_mode="off",
+               effort=body.get("effort"), backend=cfg.get("backend", "openrouter"),
                max_tokens=body["max_tokens"], timestamp=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                latency_s=round(latency, 3))
     if "error" in d:

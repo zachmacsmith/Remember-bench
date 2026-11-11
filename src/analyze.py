@@ -145,8 +145,8 @@ def main():
     L.append("")
     L.append("H2 (pilot can only show direction, 2 sizes per family): Δ by family and size\n")
     for fam in sorted(set(family.values())):
-        ms = sorted([m for m in cfg["models"] if m["family"] == fam], key=lambda m: m["params_b"])
-        L.append("- " + fam + ": " + ", ".join(f"{m['params_b']}B Δ={fmt(summary['models'][m['id']]['delta'])}" for m in ms))
+        ms = sorted([m for m in cfg["models"] if m["family"] == fam], key=lambda m: m.get("params_b") or m.get("tier", 0))
+        L.append("- " + fam + ": " + ", ".join(f"{m.get('params_b') or 'tier ' + str(m.get('tier'))}{'B' if m.get('params_b') else ''} Δ={fmt(summary['models'][m['id']]['delta'])}" for m in ms))
     L.append("")
 
     # ---- 4. outsider baselines not in the spec
@@ -190,6 +190,11 @@ def main():
             flags.append(f"base rate {s['base_rate']:.2f} outside 15-85%")
         if max(s["grade_dist"]) > 0.8 * sum(s["grade_dist"]):
             flags.append(">80% of grades in one level")
+        lk = pred[(pred.predictor == m) & (pred.condition == "C1")]
+        if "leak" in lk and lk.leak.mean() > 0.05:
+            flags.append(f"C1 leak (text beyond JSON) in {lk.leak.mean():.0%} of calls")
+        if "thinking_tokens" in lk and lk.thinking_tokens.fillna(0).max() > 0:
+            flags.append("thinking tokens present in C1")
         L.append(f"- {short[m]}: " + ("; ".join(flags) if flags else "ok"))
     L.append("")
     (out_dir / "report.md").write_text("\n".join(L))

@@ -202,14 +202,19 @@ def main():
     for c in calls:
         if c["condition"] in ("C1", "C3", "C3self"):
             p = parse_pred(c.get("raw_output"))
+            raw = c.get("raw_output") or ""
+            extra = len(re.sub(r"```(?:json)?|\{[^{}]*\}", "", raw).strip())  # text outside the JSON (C1 leak check)
             pred_rows.append(dict(item_id=c["item_id"], predictor=c["model_id"], target=c["target_id"],
                                   condition=c["condition"], prompt_variant=c["prompt_variant"], parse_ok=p is not None,
-                                  exists=p and p["exists"], verbatim=p and p["verbatim"], gist=p and p["gist"]))
+                                  exists=p and p["exists"], verbatim=p and p["verbatim"], gist=p and p["gist"],
+                                  extra_text_chars=extra, leak=extra > 40,
+                                  thinking_tokens=(c.get("usage") or {}).get("thinking_tokens")))
         elif c["condition"] == "C1L":
             pred_rows.append(dict(item_id=c["item_id"], predictor=c["model_id"], target=c["target_id"],
                                   condition="C1L", prompt_variant=c["prompt_variant"],
                                   parse_ok=p_yes(c.get("top_logprobs")) is not None,
-                                  exists=None, verbatim=None, gist=(lambda v: None if v is None else 100 * v)(p_yes(c.get("top_logprobs")))))
+                                  exists=None, verbatim=None, gist=(lambda v: None if v is None else 100 * v)(p_yes(c.get("top_logprobs"))),
+                                  extra_text_chars=0, leak=False, thinking_tokens=None))
     write_csv(out_dir / "predictions.csv", pred_rows)
 
     # recall scoring

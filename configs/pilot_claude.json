@@ -1,0 +1,19 @@
+{
+  "name": "pilot_claude",
+  "backend": "claude_cli",
+  "items": "data/items/pilot_ground_truth.jsonl",
+  "out_dir": "results/pilot_claude",
+  "pricing_snapshot": "data/raw/openrouter_models.json",
+  "temperature": null,
+  "seed": null,
+  "max_tokens": {"C1": null, "C2": null, "C3": null, "C3self": null, "JUDGE": null},
+  "conditions": ["C1", "C3", "C3self", "C2"],
+  "models": [
+    {"id": "claude-opus-5-5",   "name": "Claude Opus 5.5 (Anthropic)",   "family": "claude", "params_b": null, "tier": 3, "effort": "low", "match": "claude-sonnet-5-5", "est_usd_per_call": 0.009},
+    {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5 (Anthropic)", "family": "claude", "params_b": null, "tier": 2, "effort": "low", "match": "claude-opus-5-5",   "est_usd_per_call": 0.005},
+    {"id": "claude-haiku-4-5",  "name": "Claude Haiku 4.5 (Anthropic)",  "family": "claude", "params_b": null, "tier": 1, "effort": null,  "match": "claude-sonnet-5-5", "est_usd_per_call": 0.0014}
+  ],
+  "judge": {"id": "claude-haiku-4-5", "est_usd_per_call": 0.0018},
+  "concurrency": 8,
+  "notes": "Thinking off: MAX_THINKING_TOKENS unset, alwaysThinkingEnabled=false, effort low where supported. Haiku 5.5 excluded because it thinks regardless of flags. No temperature, max_tokens, or logprobs control through the CLI, so C1L is dropped. All models are one family: matched predictors are nearest-tier siblings, which tests self vs same-family (the spec's shared-data control), not cross-family. Judge is in-family; acceptable for H1 because the target is fixed, so both predictors are scored against the same labels."
+}
