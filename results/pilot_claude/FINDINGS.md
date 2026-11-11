@@ -52,3 +52,29 @@ Self-prediction beat sibling prediction clearly for **one of three targets (Haik
 8. **With the continuous similarity score, self ranks first within text for all three targets** (Spearman ρ: Opus 0.28 vs ≤0.16, Sonnet 0.32 vs ≤0.25, Haiku 0.10 vs ≤0.03). This is small and has no CIs; it matches the within-text AUROC pattern.
 
 **Net:** the self-advantage seen so far comes from text-level familiarity and how exact recall tends to be. There is no evidence of item-level privileged access. The next design should pre-register the double-centered test (4) and the private-signal test (5) as the primary H1 tests. Unlike pooled AUROC, popularity can't fake them.
+
+## Correction: Haiku refusals (found after the deep dive)
+
+The original refusal detector missed most refusal phrasings. With a corrected detector:
+- **Haiku 4.5 refused or hedged on all 30 Tractatus items, all 15 Tennessee items, and 1 US Constitution item.** It typically cited copyright, which is wrong for the 1922 Ogden translation (public domain in the US), or said it lacked "reliable recall".
+- **Opus and Sonnet never refused.**
+
+Haiku's 0% on those texts therefore measures refusal behaviour, not memory. Consequences:
+- **H1 for Haiku, refused items excluded** (`excl_refusals/report.md`): self 0.79 vs. Opus→Haiku 0.62 (Δ +0.17, CI [0.05, 0.28]) and vs. Sonnet→Haiku 0.70 (Δ +0.09, CI [−0.02, 0.20]). The self-advantage survives but is weaker. It now rests on KJV, Sonnets and US items only, mostly from Haiku knowing which random sonnets it can recall.
+- **The "nested knowledge" finding (deep dive 1)** and **Haiku's 100% pessimism precision** are confounded with refusal and should not be read as memory results. Haiku was partly predicting its own refusals.
+- **Next run:** state in the system prompt that the pinned editions are public domain, code refusal as its own outcome, and report H1 with and without refused items.
+
+## Recall by domain
+
+| domain | text | Opus 4.6 verbatim / gist+ | Sonnet 4.6 | Haiku 4.5 |
+|---|---|---|---|---|
+| Religious | KJV famous | 100% / 100% | 100% / 100% | 100% / 100% |
+| | KJV random | 100% / 100% | 100% / 100% | 75% / 90% |
+| Literature | Sonnets famous (Q1) | 100% / 100% | 100% / 100% | 80% / 80% |
+| | Sonnets random (Q1) | 100% / 100% | 100% / 100% | 40% / 40% |
+| Legal | US Constitution | 93% / 100% | 80% / 100% | 53% / 80% |
+| | Tennessee Constitution | 0% / 7% (8 address errors) | 0% / 0% (5 address errors) | refused 15/15 |
+| Philosophy | Tractatus top-level | 40% / 60% | 20% / 60% | refused 10/10 |
+| | Tractatus deep | 25% / 50% | 15% / 40% | refused 20/20 |
+
+Opus and Sonnet have the KJV and the Sonnets effectively memorized whole: random verses and random sonnets came back verbatim, despite about 40× lower web frequency than the famous ones. They know much of the Tennessee text but not its section numbering. The Tractatus is the only domain with genuine partial, item-level knowledge.

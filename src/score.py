@@ -25,9 +25,9 @@ from common import ROOT, read_jsonl, append_jsonl, load_config, clean_quotes, nf
 from run_calls import call_api, load_pricing  # noqa: E402
 
 REFUSAL_RE = re.compile(
-    r"(I can(?:no|')t (?:provide|reproduce|share|help)|I(?:'m| am) (?:not able|unable) to (?:provide|reproduce|recall)|"
-    r"copyright|I don't have (?:access|the (?:exact|full) text)|I do not have (?:access|the (?:exact|full) text)|"
-    r"as an AI)", re.I)
+    r"declin|copyright|I (?:don't|do not) have (?:reliable|accurate|confident|sufficient|access|the (?:exact|full) text)|"
+    r"I can(?:no|')t (?:reliably|accurately|reproduce|provide|share|help)|I(?:'m| am) (?:not able|unable) to (?:provide|reproduce|recall)|"
+    r"not (?:able|confident enough) to (?:reproduce|recall)|unable to (?:reproduce|recall|provide)|rather than (?:risk|guess)|as an AI", re.I)
 
 
 # ---------------------------------------------------------------- normalization and metrics
@@ -98,7 +98,7 @@ def critical_accuracy(crit, hyp_norm_toks):
 
 def score_recall(it, raw):
     out = strip_echo(raw, it)
-    flags = dict(refusal=bool(REFUSAL_RE.search(out or "")) and len(out.split()) < 80,
+    flags = dict(refusal=bool(REFUSAL_RE.search((out or "")[:400])),
                  nonexistent=out.strip().upper().startswith("NONEXISTENT"),
                  empty=not out.strip())
     ref = normalize(it["ground_truth"]).split()

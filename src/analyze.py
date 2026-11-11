@@ -288,6 +288,7 @@ def main():
     ap.add_argument("--config", default="pilot")
     ap.add_argument("--outcome", default="gist", choices=["gist", "verbatim"])
     ap.add_argument("--no-charts", action="store_true")
+    ap.add_argument("--exclude-refusals", action="store_true", help="treat refused attempts as missing instead of grade 0")
     args = ap.parse_args()
     cfg = load_config(args.config)
     out_dir = ROOT / cfg["out_dir"]
@@ -310,6 +311,11 @@ def main():
     text = items["text_id"].reindex(ids).to_numpy()
     strata_lbl = (items["text_id"] + "/" + items["popularity_tier"]).reindex(ids)
 
+    if args.exclude_refusals:
+        rec.loc[rec.refusal.astype(bool), "grade"] = np.nan
+        out_dir = out_dir / "excl_refusals"
+        out_dir.mkdir(exist_ok=True)
+        fig_dir = out_dir / "figures"
     rec["y"] = np.where(rec["grade"].isna(), np.nan, (rec["grade"] >= thr).astype(float))
     Y = rec.pivot_table(index="item_id", columns="model_id", values="y").reindex(ids)
     G = rec.pivot_table(index="item_id", columns="model_id", values="grade").reindex(ids)
