@@ -216,6 +216,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit-items", type=int, default=None)
     ap.add_argument("--conditions", default=None, help="comma list, e.g. C1,C2")
+    ap.add_argument("--concurrency", type=int, default=None)
     args = ap.parse_args()
     cfg = load_config(args.config)
     items = read_jsonl(ROOT / cfg["items"])
@@ -232,6 +233,8 @@ def main():
         items = picked
     if args.conditions:
         cfg["conditions"] = args.conditions.split(",")
+    if args.concurrency:
+        cfg["concurrency"] = args.concurrency
     pricing = load_pricing(cfg)
     jobs = build_jobs(cfg, items)
     if args.dry_run:

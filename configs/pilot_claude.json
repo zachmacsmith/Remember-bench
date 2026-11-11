@@ -55,6 +55,6 @@
     "id": "claude-haiku-4-5",
     "est_usd_per_call": 0.0018
   },
-  "concurrency": 8,
+  "concurrency": 24,
   "notes": "Thinking off: MAX_THINKING_TOKENS unset (the environment sets it to 31999, which forces thinking) and alwaysThinkingEnabled=false. 4.x models use budgeted thinking, so this turns it off; verified 0 thinking tokens on hard items. Excluded: Haiku 5.5 and Sonnet 5.5 think adaptively on uncertain items regardless of flags; Opus 5.5 with thinking off writes a recall attempt into its C1 answer on most uncertain items (only a --json-schema stops it, at 2.4x cost). No temperature, max_tokens or logprobs control through the CLI, so C1L is dropped. All models are one family: matched predictors are nearest-tier siblings (the spec's shared-data control), not cross-family. Judge is in-family; acceptable for H1 because the target is fixed, so both predictors are scored against the same labels."
 }
