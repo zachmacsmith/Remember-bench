@@ -227,6 +227,9 @@ def reliability(plt, curves, path, title):
     for k, (m, c) in enumerate(curves.items()):
         if not c:
             continue
+        c = [b for b in c if b[2] >= 5]
+        if not c:
+            continue
         xs, ys, ns = zip(*c)
         ax.plot(xs, ys, color=SERIES[k], lw=2)
         ax.scatter(xs, ys, s=[max(30, 4 * n) for n in ns], color=SERIES[k], edgecolor=SURF, linewidth=2, zorder=3, label=m)
@@ -238,8 +241,43 @@ def reliability(plt, curves, path, title):
     ax.set_axisbelow(True)
     ax.legend(frameon=False, fontsize=8, loc="upper left")
     ax.set_title(title, loc="left")
-    fig.text(0.01, 0.01, "Marker area ∝ items in bin; bins with few items are noisy.", fontsize=8, color=INK2)
+    fig.text(0.01, 0.01, "Below the dashed line = overconfident. Marker area ∝ items in bin; bins with < 5 items hidden.", fontsize=8, color=INK2)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
+    fig.savefig(path, dpi=200)
+    plt.close(fig)
+
+
+def summary_chart(plt, data, path):
+    """data: {target: {"pooled": (self, best_other, best_other_name), "within": (...)}} -> grouped bars from the chance line."""
+    targets = list(data)
+    fig, axes = plt.subplots(1, len(targets), figsize=(3.4 * len(targets), 3.9), sharey=True)
+    axes = np.atleast_1d(axes)
+    w = 0.36
+    for ax, t in zip(axes, targets):
+        for gi, key in enumerate(("pooled", "within")):
+            s_, o_, oname = data[t][key]
+            for k, (val, colr) in enumerate(((s_, SERIES[0]), (o_, SERIES[1]))):
+                x = gi + (k - 0.5) * w
+                if np.isnan(val):
+                    continue
+                ax.bar(x, val - 0.5, w, bottom=0.5, color=colr, edgecolor=SURF, linewidth=2)
+                above = val >= 0.5
+                ax.text(x, val + (0.012 if above else -0.012), f"{val:.2f}", ha="center", va="bottom" if above else "top", fontsize=9, color=INK)
+        ax.axhline(0.5, color=INK2, lw=1)
+        ax.set_xticks([0, 1], [f"all items\n(other: {data[t]['pooled'][2]})", f"within each text\n(other: {data[t]['within'][2]})"], fontsize=9)
+        ax.tick_params(axis="x", length=0)
+        ax.set_ylim(0.4, 1.02)
+        ax.yaxis.grid(True, color=GRID, lw=0.8)
+        ax.set_axisbelow(True)
+        ax.set_title(f"Predicting {t}'s recall", loc="left", fontsize=10)
+    axes[0].set_ylabel("AUROC (0.5 = chance)")
+    from matplotlib.patches import Patch
+    fig.legend(handles=[Patch(color=SERIES[0], label="the model itself (C1)"), Patch(color=SERIES[1], label="best other model (C3)")],
+               loc="upper right", frameon=False, ncol=2, fontsize=9)
+    fig.suptitle("Does a model predict its own recall better than other models can?", x=0.01, ha="left", fontweight="bold", fontsize=11)
+    fig.text(0.01, 0.01, "Bars start at chance (0.5). 'Within each text' compares items only against others from the same text, "
+             "removing the easy-text/hard-text signal.", fontsize=8, color=INK2)
+    fig.tight_layout(rect=(0, 0.04, 1, 0.9))
     fig.savefig(path, dpi=200)
     plt.close(fig)
 
@@ -508,7 +546,7 @@ def main():
             fl.append("thinking tokens present in C1")
         add(f"- {short[m]}: " + ("; ".join(fl) if fl else "ok"))
     add("")
-    add("Figures: `figures/fig1_base_rates.png`, `fig2_auroc_matrix.png`, `fig3_delta_forest.png`, `fig4_within_text.png`, `fig5_calibration.png`.")
+    add("Figures: `figures/fig0_summary.png`, `fig1_base_rates.png`, `fig2_auroc_matrix.png`, `fig3_delta_forest.png`, `fig4_within_text.png`, `fig5_calibration.png`.")
 
     (out_dir / "report.md").write_text("\n".join(L))
     with open(out_dir / "summary.json", "w") as f:
@@ -525,6 +563,14 @@ def main():
         forest(plt, forest_rows, fig_dir / "fig3_delta_forest.png", "Self-advantage: self C1 AUROC minus comparator AUROC")
         dots(plt, dot_data, fig_dir / "fig4_within_text.png", "Pooled vs within-text AUROC by predictor")
         reliability(plt, curves, fig_dir / "fig5_calibration.png", "Calibration of self-predictions (C1)")
+        sdata = {}
+        for t, d in dot_data.items():
+            others = {k: v for k, v in d.items() if k not in ("self", "log n-gram freq")}
+            bp = max(others, key=lambda k: others[k][0])
+            bw = max(others, key=lambda k: -1 if np.isnan(others[k][1]) else others[k][1])
+            sdata[t] = {"pooled": (d["self"][0], others[bp][0], bp.replace(" (C3)", "")),
+                        "within": (d["self"][1], others[bw][1], bw.replace(" (C3)", ""))}
+        summary_chart(plt, sdata, fig_dir / "fig0_summary.png")
     print("\n".join(L))
 
 

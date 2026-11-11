@@ -39,3 +39,16 @@ Self-prediction beat sibling prediction clearly for **one of three targets (Haik
 4. **Add cross-family models** (the open ladder via OpenRouter) for a true outsider comparison and H2.
 5. **Add nonexistent locators** (about 10%) so `exists` and `NONEXISTENT` can be evaluated.
 6. **Human-grade a stratified sample** of about 150 items for judge kappa.
+
+## Deep dive (`deep_dive.md`): what survives once shared item difficulty is removed
+
+1. **Knowledge is nested.** Haiku never recalled an item that Sonnet or Opus missed: 0 of 69 disagreements went Haiku's way. Opus and Sonnet split 8/5 on 13 items. For a weaker model, "do I know it?" is close to "is it among the easiest items?"
+2. **Nearly half of Opus's failures are address errors.** In 13 of its 28 failures, Opus reproduced a *different* unit of the same text (8/14 on Tennessee, 5/14 on the Tractatus). Its mean confidence on these was 0.72, against 0.59 on true failures. Opus's confidence tracks content familiarity, not whether it has the locator right. Sonnet behaves differently: its 5 address errors got low confidence (0.36).
+3. **Self-optimism is uniform and comes from framing.** Every model rates itself about 10 points above how it rates the others (Opus 0.85 vs 0.77, Sonnet 0.78 vs 0.68, Haiku 0.77 vs 0.65), whatever its real rank. Under third-person framing with its own name (C3-self), the gap disappears. That points to the "you" wording, not knowledge of rank. It is correct for Opus and backwards for Haiku.
+4. **No model knows which model will get a specific item.** With item difficulty and each model's overall level removed (double-centered), the correlations are r = 0.08 (Opus), 0.08 (Sonnet), −0.16 (Haiku). The models know overall levels roughly, but not item-by-item differences between models.
+5. **No item-level private signal.** When a model is more optimistic about itself than the outsiders are, within the same text, it is not more often right: r = 0.00, 0.05, −0.05. Across texts, Opus's private optimism points the wrong way (AUROC 0.24), driven by the Tennessee Constitution.
+6. **The one consistent self-advantage is about exactness.** About 87–90% of gist-correct recalls are verbatim: recall is near all-or-nothing. Every predictor underestimates this, but self-estimates come closest for all three targets (implied P(verbatim | gist): self 0.73–0.82 vs. outsiders 0.46–0.69).
+7. **Threshold view of Opus.** Opus rated only 1 of its 28 failures below 50%; Sonnet and Haiku flagged 71% and 89% of Opus's failures. Opus ranks its items well but its numbers are shifted up.
+8. **With the continuous similarity score, self ranks first within text for all three targets** (Spearman ρ: Opus 0.28 vs ≤0.16, Sonnet 0.32 vs ≤0.25, Haiku 0.10 vs ≤0.03). This is small and has no CIs; it matches the within-text AUROC pattern.
+
+**Net:** the self-advantage seen so far comes from text-level familiarity and how exact recall tends to be. There is no evidence of item-level privileged access. The next design should pre-register the double-centered test (4) and the private-signal test (5) as the primary H1 tests. Unlike pooled AUROC, popularity can't fake them.

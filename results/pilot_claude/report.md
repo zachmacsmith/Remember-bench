@@ -160,4 +160,4 @@ Logistic regression of M's outcome on text fixed effects + log n-gram frequency 
 - sonnet-4-6: ok
 - haiku-4-5: ok
 
-Figures: `figures/fig1_base_rates.png`, `fig2_auroc_matrix.png`, `fig3_delta_forest.png`, `fig4_within_text.png`, `fig5_calibration.png`.
+Figures: `figures/fig0_summary.png`, `fig1_base_rates.png`, `fig2_auroc_matrix.png`, `fig3_delta_forest.png`, `fig4_within_text.png`, `fig5_calibration.png`.

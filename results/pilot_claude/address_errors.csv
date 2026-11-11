@@ -1,0 +1,124 @@
+item_id,model_id,text_id,asked,produced,sim_to_produced,own_sim,address_error
+kjv-Genesis-46-4,claude-haiku-4-5,kjv,Genesis 46:4,Genesis 21:18,0.44,0.4032,False
+kjv-Daniel-8-18,claude-haiku-4-5,kjv,Daniel 8:18,Daniel 9:21,0.928,0.3835,True
+sonnets-055,claude-haiku-4-5,sonnets,55,98,0.307,0.7556,False
+sonnets-060,claude-haiku-4-5,sonnets,60,94,0.306,0.6092,False
+sonnets-040,claude-haiku-4-5,sonnets,40,137,0.309,0.7838,False
+sonnets-009,claude-haiku-4-5,sonnets,9,133,0.328,0.3148,False
+sonnets-041,claude-haiku-4-5,sonnets,41,46,0.306,0.8144,False
+sonnets-045,claude-haiku-4-5,sonnets,45,40,0.276,0.3272,False
+sonnets-092,claude-haiku-4-5,sonnets,92,87,0.331,0.3962,False
+sonnets-095,claude-haiku-4-5,sonnets,95,96,0.995,0.2398,True
+sonnets-091,claude-haiku-4-5,sonnets,91,27,0.288,0.8413,False
+sonnets-100,claude-haiku-4-5,sonnets,100,11,0.369,0.6349,False
+sonnets-080,claude-haiku-4-5,sonnets,80,137,0.324,0.3824,False
+sonnets-118,claude-haiku-4-5,sonnets,118,60,1.0,0.2662,True
+sonnets-141,claude-haiku-4-5,sonnets,141,137,0.33,0.4647,False
+sonnets-131,claude-haiku-4-5,sonnets,131,20,0.872,0.2203,True
+tractatus-2.2,claude-opus-4-6,tractatus,2.2,2.02,1.0,0.1707,True
+tractatus-5,claude-haiku-4-5,tractatus,5,6.32,0.286,0.2301,False
+tractatus-2.1,claude-haiku-4-5,tractatus,2.1,2.014,0.268,0.2368,False
+tractatus-3.4,claude-haiku-4-5,tractatus,3.4,2.025,0.364,0.25,False
+tractatus-5.1,claude-haiku-4-5,tractatus,5.1,4.01,0.313,0.2105,False
+tractatus-6.5,claude-sonnet-4-6,tractatus,6.5,6,0.711,0.2515,False
+tractatus-6.5,claude-haiku-4-5,tractatus,6.5,2.221,0.295,0.2512,False
+tractatus-5.4,claude-opus-4-6,tractatus,5.4,6.001,0.673,0.269,False
+tractatus-5.4,claude-haiku-4-5,tractatus,5.4,3.1,0.324,0.2414,False
+tractatus-3,claude-haiku-4-5,tractatus,3,4.211,0.322,0.1489,False
+tractatus-5.4,claude-sonnet-4-6,tractatus,5.4,5.234,0.657,0.2671,False
+tractatus-6.4,claude-opus-4-6,tractatus,6.4,6,0.826,0.1111,True
+tractatus-6.4,claude-sonnet-4-6,tractatus,6.4,6,0.711,0.1143,False
+tractatus-6.4,claude-haiku-4-5,tractatus,6.4,4.211,0.356,0.2,False
+tractatus-6.3,claude-haiku-4-5,tractatus,6.3,4.01,0.328,0.2397,False
+tractatus-6.3,claude-opus-4-6,tractatus,6.3,6,0.826,0.2479,True
+tractatus-6.3,claude-sonnet-4-6,tractatus,6.3,6,0.711,0.2479,False
+tractatus-3.334,claude-opus-4-6,tractatus,3.334,5.473,0.622,0.3366,False
+tractatus-3.411,claude-opus-4-6,tractatus,3.411,4,0.5,0.3956,False
+tractatus-3.411,claude-haiku-4-5,tractatus,3.411,2.025,0.364,0.1979,False
+tractatus-3.334,claude-haiku-4-5,tractatus,3.334,6.32,0.286,0.2178,False
+tractatus-2.131,claude-haiku-4-5,tractatus,2.131,5.251,0.303,0.2,False
+tractatus-2.131,claude-sonnet-4-6,tractatus,2.131,7,0.176,0.125,False
+tractatus-3.411,claude-sonnet-4-6,tractatus,3.411,5.471,0.443,0.2857,False
+tractatus-3.143,claude-haiku-4-5,tractatus,3.143,5.251,0.257,0.269,False
+tractatus-3.143,claude-sonnet-4-6,tractatus,3.143,7,0.176,0.0372,False
+tractatus-3.328,claude-haiku-4-5,tractatus,3.328,6.32,0.281,0.2716,False
+tractatus-2.0211,claude-haiku-4-5,tractatus,2.0211,2.141,0.258,0.2101,False
+tractatus-2.0131,claude-haiku-4-5,tractatus,2.0131,6.32,0.286,0.2711,False
+tractatus-3.328,claude-sonnet-4-6,tractatus,3.328,7,0.176,0.0581,False
+tractatus-5.473,claude-haiku-4-5,tractatus,5.473,3.3,0.326,0.2427,False
+tractatus-4.0311,claude-opus-4-6,tractatus,4.0311,3.314,0.585,0.2645,False
+tractatus-4.0311,claude-haiku-4-5,tractatus,4.0311,2.141,0.273,0.2632,False
+tractatus-4.1241,claude-opus-4-6,tractatus,4.1241,4.1213,0.344,0.3152,False
+tractatus-5.2523,claude-opus-4-6,tractatus,5.2523,7,0.176,0.1042,False
+tractatus-4.1241,claude-sonnet-4-6,tractatus,4.1241,7,0.176,0.0543,False
+tractatus-4.1241,claude-haiku-4-5,tractatus,4.1241,6.44,0.279,0.1872,False
+tractatus-5.2523,claude-haiku-4-5,tractatus,5.2523,3.12,0.274,0.25,False
+tractatus-5.454,claude-haiku-4-5,tractatus,5.454,4.23,0.321,0.239,False
+tractatus-5.454,claude-sonnet-4-6,tractatus,5.454,7,0.176,0.0813,False
+tractatus-5.155,claude-opus-4-6,tractatus,5.155,5.471,0.477,0.4389,False
+tractatus-5.155,claude-haiku-4-5,tractatus,5.155,5.632,0.289,0.2161,False
+tractatus-4.461,claude-haiku-4-5,tractatus,4.461,5.54,0.311,0.2246,False
+tractatus-4.461,claude-sonnet-4-6,tractatus,4.461,5.621,0.381,0.3262,False
+tractatus-5.155,claude-sonnet-4-6,tractatus,5.155,3.41,0.355,0.2778,False
+tractatus-6.2321,claude-sonnet-4-6,tractatus,6.2321,7,0.176,0.0503,False
+tractatus-6.2321,claude-opus-4-6,tractatus,6.2321,6.12,0.487,0.2535,False
+tractatus-6.2321,claude-haiku-4-5,tractatus,6.2321,4.01,0.31,0.25,False
+tractatus-6.362,claude-haiku-4-5,tractatus,6.362,5.54,0.311,0.2,False
+tractatus-6.232,claude-opus-4-6,tractatus,6.232,2.02,0.45,0.2208,False
+tractatus-6.232,claude-haiku-4-5,tractatus,6.232,3.22,0.286,0.2564,False
+tractatus-6.1232,claude-haiku-4-5,tractatus,6.1232,3.1,0.324,0.2066,False
+tractatus-6.1232,claude-sonnet-4-6,tractatus,6.1232,6.234,0.405,0.2623,False
+tractatus-6.1232,claude-opus-4-6,tractatus,6.1232,4.465,0.751,0.3082,True
+tractatus-6.1202,claude-haiku-4-5,tractatus,6.1202,3.1,0.338,0.2667,False
+tractatus-5.641,claude-haiku-4-5,tractatus,5.641,4.23,0.298,0.2775,False
+tractatus-6.1202,claude-sonnet-4-6,tractatus,6.1202,7,0.176,0.0889,False
+tractatus-6.1202,claude-opus-4-6,tractatus,6.1202,6.123,0.761,0.2111,True
+tractatus-5.641,claude-sonnet-4-6,tractatus,5.641,2.225,0.405,0.3089,False
+tractatus-2.2,claude-haiku-4-5,tractatus,2.2,4,0.31,0.2317,False
+usconst-4-4,claude-haiku-4-5,us_constitution,"Article IV, Section 4",Article VII,0.364,0.3421,False
+usconst-2-4,claude-haiku-4-5,us_constitution,"Article II, Section 4",Article VII,0.299,0.2708,False
+usconst-4-3,claude-haiku-4-5,us_constitution,"Article IV, Section 3","Article I, Section 8",0.371,0.2925,False
+tnconst-1-3,claude-sonnet-4-6,tn_constitution,"Article I, Section 3","Article V, Section 1",0.377,0.3027,False
+tnconst-1-3,claude-opus-4-6,tn_constitution,"Article I, Section 3","Article I, Section 30",0.333,0.2781,False
+tnconst-1-10,claude-sonnet-4-6,tn_constitution,"Article I, Section 10","Article I, Section 8",0.71,0.2828,False
+tnconst-1-3,claude-haiku-4-5,tn_constitution,"Article I, Section 3","Article VII, Section 4",0.298,0.2222,False
+tnconst-1-22,claude-opus-4-6,tn_constitution,"Article I, Section 22","Article I, Section 26",0.93,0.3,True
+tnconst-1-10,claude-opus-4-6,tn_constitution,"Article I, Section 10","Article I, Section 8",1.0,0.3438,True
+tnconst-1-22,claude-haiku-4-5,tn_constitution,"Article I, Section 22","Article I, Section 33",0.272,0.27,False
+tnconst-1-27,claude-opus-4-6,tn_constitution,"Article I, Section 27","Article I, Section 26",1.0,0.2716,True
+tnconst-1-10,claude-haiku-4-5,tn_constitution,"Article I, Section 10","Article III, Section 15",0.298,0.2093,False
+tnconst-1-22,claude-sonnet-4-6,tn_constitution,"Article I, Section 22","Article I, Section 19",0.914,0.2596,True
+tnconst-2-14,claude-sonnet-4-6,tn_constitution,"Article II, Section 14","Article XI, Section 17",0.37,0.2579,False
+tnconst-1-32,claude-sonnet-4-6,tn_constitution,"Article I, Section 32","Article XI, Section 17",0.093,0.084,False
+tnconst-2-30,claude-haiku-4-5,tn_constitution,"Article II, Section 30","Article III, Section 15",0.292,0.2476,False
+tnconst-1-27,claude-haiku-4-5,tn_constitution,"Article I, Section 27","Article III, Section 3",0.308,0.2864,False
+tnconst-2-14,claude-opus-4-6,tn_constitution,"Article II, Section 14","Article V, Section 1",0.377,0.2526,False
+tnconst-1-27,claude-sonnet-4-6,tn_constitution,"Article I, Section 27","Article I, Section 26",0.899,0.2704,True
+tnconst-2-30,claude-sonnet-4-6,tn_constitution,"Article II, Section 30","Article I, Section 8",0.963,0.2358,True
+tnconst-2-30,claude-opus-4-6,tn_constitution,"Article II, Section 30","Article IX, Section 2",1.0,0.2667,True
+tnconst-1-32,claude-haiku-4-5,tn_constitution,"Article I, Section 32","Article III, Section 3",0.306,0.2605,False
+tnconst-3-13,claude-opus-4-6,tn_constitution,"Article III, Section 13","Article II, Section 17",0.541,0.2521,False
+tnconst-3-14,claude-haiku-4-5,tn_constitution,"Article III, Section 14","Article III, Section 16",0.311,0.2362,False
+tnconst-3-14,claude-sonnet-4-6,tn_constitution,"Article III, Section 14","Article I, Section 8",1.0,0.2823,True
+tnconst-2-14,claude-haiku-4-5,tn_constitution,"Article II, Section 14","Article II, Section 1",0.277,0.2053,False
+tnconst-3-13,claude-haiku-4-5,tn_constitution,"Article III, Section 13","Article I, Section 22",0.27,0.2331,False
+tnconst-3-13,claude-sonnet-4-6,tn_constitution,"Article III, Section 13","Article VI, Section 3",0.337,0.2837,False
+tnconst-8-2,claude-opus-4-6,tn_constitution,"Article VIII, Section 2","Article III, Section 13",0.413,0.2602,False
+tnconst-3-14,claude-opus-4-6,tn_constitution,"Article III, Section 14","Article I, Section 14",0.922,0.2544,True
+tnconst-4-2,claude-opus-4-6,tn_constitution,"Article IV, Section 2","Article III, Section 2",1.0,0.2621,True
+tnconst-4-2,claude-haiku-4-5,tn_constitution,"Article IV, Section 2","Article III, Section 15",0.263,0.1731,False
+tnconst-11-2,claude-opus-4-6,tn_constitution,"Article XI, Section 2","Article IX, Section 2",1.0,0.2906,True
+tnconst-11-16,claude-opus-4-6,tn_constitution,"Article XI, Section 16","Article IX, Section 2",1.0,0.2581,True
+tnconst-8-2,claude-haiku-4-5,tn_constitution,"Article VIII, Section 2","Article III, Section 15",0.278,0.2602,False
+tnconst-8-2,claude-sonnet-4-6,tn_constitution,"Article VIII, Section 2","Article II, Section 9",0.382,0.2602,False
+tnconst-11-16,claude-sonnet-4-6,tn_constitution,"Article XI, Section 16","Article III, Section 1",0.366,0.2845,False
+tnconst-11-9,claude-opus-4-6,tn_constitution,"Article XI, Section 9","Article III, Section 1",0.423,0.2611,False
+tnconst-11-9,claude-haiku-4-5,tn_constitution,"Article XI, Section 9","Article VII, Section 4",0.298,0.2278,False
+tnconst-11-16,claude-haiku-4-5,tn_constitution,"Article XI, Section 16","Article I, Section 4",0.294,0.2535,False
+tnconst-11-9,claude-sonnet-4-6,tn_constitution,"Article XI, Section 9","Article II, Section 29",0.715,0.2946,False
+tnconst-8-3,claude-opus-4-6,tn_constitution,"Article VIII, Section 3","Article III, Section 16",0.32,0.2636,False
+tnconst-11-2,claude-haiku-4-5,tn_constitution,"Article XI, Section 2","Article III, Section 16",0.29,0.2341,False
+tnconst-4-2,claude-sonnet-4-6,tn_constitution,"Article IV, Section 2","Article IV, Section 1",0.713,0.2432,False
+tnconst-8-3,claude-haiku-4-5,tn_constitution,"Article VIII, Section 3","Article I, Section 10",0.272,0.2329,False
+tnconst-11-2,claude-sonnet-4-6,tn_constitution,"Article XI, Section 2","Article I, Section 27",0.299,0.3103,False
+tnconst-8-3,claude-sonnet-4-6,tn_constitution,"Article VIII, Section 3","Article II, Section 29",0.773,0.3134,True
