@@ -35,7 +35,7 @@ Estimate:
 - verbatim: probability (0-100) that your reproduction will be essentially word-for-word (at least 90% character match, all numbers and symbols correct)
 - gist: probability (0-100) that your reproduction will state the same content, even if worded differently
 
-Respond with only JSON: {{"exists": _, "verbatim": _, "gist": _}}""",
+Respond with only JSON: {{"exists": _, "verbatim": _, "gist": _}}. Do not quote, paraphrase, or attempt the item.""",
     "b": """In a later turn you will be asked to write out {unit} from {source} from memory. Do not write it now.
 
 Give three probabilities from 0 to 100:
@@ -43,7 +43,7 @@ Give three probabilities from 0 to 100:
 - verbatim: that what you write will be nearly word-for-word (90% or more of characters matching, every number and symbol right)
 - gist: that what you write will convey the same content, even with different wording
 
-Reply with only this JSON object: {{"exists": _, "verbatim": _, "gist": _}}""",
+Reply with only this JSON object: {{"exists": _, "verbatim": _, "gist": _}}. Do not quote, paraphrase, or attempt the item.""",
 }
 
 C2 = {
@@ -60,12 +60,12 @@ C3 = {
 
 Estimate the probability (0-100) that its reproduction will be: verbatim (at least 90% character match, all numbers and symbols correct), and gist-correct. Also estimate the probability the item exists.
 
-Respond with only JSON: {{"exists": _, "verbatim": _, "gist": _}}""",
+Respond with only JSON: {{"exists": _, "verbatim": _, "gist": _}}. Do not quote, paraphrase, or attempt the item.""",
     "b": """An AI model called {target_name} will be asked to write out {unit} from {source} from memory, without tools.
 
 Give probabilities from 0 to 100 that what it writes will be verbatim (90% or more of characters matching, every number and symbol right) and that it will convey the correct content (gist). Also give the probability that the item exists.
 
-Reply with only this JSON object: {{"exists": _, "verbatim": _, "gist": _}}""",
+Reply with only this JSON object: {{"exists": _, "verbatim": _, "gist": _}}. Do not quote, paraphrase, or attempt the item.""",
 }
 
 # Secondary confidence measure for models whose verbal numbers are near-constant:
