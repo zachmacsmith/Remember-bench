@@ -1,0 +1,19 @@
+{
+  "name": "pilot",
+  "items": "data/items/pilot_ground_truth.jsonl",
+  "out_dir": "results/pilot",
+  "api_base": "https://openrouter.ai/api/v1",
+  "pricing_snapshot": "data/raw/openrouter_models.json",
+  "temperature": 0,
+  "seed": 1234,
+  "max_tokens": {"C1": 60, "C1L": 1, "C2": 350, "C3": 60, "C3self": 60, "JUDGE": 80},
+  "conditions": ["C1", "C1L", "C2", "C3", "C3self"],
+  "models": [
+    {"id": "meta-llama/llama-3.1-8b-instruct",  "name": "Llama 3.1 8B Instruct (Meta)",  "family": "llama", "params_b": 8,  "match": "google/gemma-3-4b-it"},
+    {"id": "meta-llama/llama-3.3-70b-instruct", "name": "Llama 3.3 70B Instruct (Meta)", "family": "llama", "params_b": 70, "match": "google/gemma-3-27b-it"},
+    {"id": "google/gemma-3-4b-it",              "name": "Gemma 3 4B IT (Google)",        "family": "gemma", "params_b": 4,  "match": "meta-llama/llama-3.1-8b-instruct"},
+    {"id": "google/gemma-3-27b-it",             "name": "Gemma 3 27B IT (Google)",       "family": "gemma", "params_b": 27, "match": "meta-llama/llama-3.3-70b-instruct"}
+  ],
+  "judge": {"id": "anthropic/claude-haiku-5.5", "reasoning": {"enabled": false}},
+  "concurrency": 8
+}
